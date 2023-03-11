@@ -1,5 +1,7 @@
+import { gql } from '@apollo/client';
+
 // Query to get logged in user's info (needs the token)
-const ME_QUERY = `
+export const GET_ME = gql`
   query {
     me {
       _id
@@ -18,15 +20,15 @@ const ME_QUERY = `
   }
 `;
 
-export const getMe = (token) => {
-  return fetch('/graphql', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      query: ME_QUERY
-    })
-  });
-};
+export const SEARCH_BOOKS = gql`
+  query SearchBooks($searchInput: String!) {
+    searchBooks(searchInput: $searchInput) {
+      bookId
+      authors
+      title
+      description
+      image
+      link
+    }
+  }
+`;
